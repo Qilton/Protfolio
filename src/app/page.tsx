@@ -1,5 +1,5 @@
 'use client'
-
+import Head from 'next/head';
 import { ReactNode, useEffect, useState } from 'react'
 import { motion, useAnimation } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
@@ -65,10 +65,12 @@ export default function Portfolio() {
   }, [theme])
 
   return (
+    
     <div className={`min-h-screen transition-colors duration-300 ${theme === 'dark'
         ? 'bg-gradient-to-b from-gray-900 to-gray-800 text-white'
         : 'bg-gradient-to-b from-gray-100 to-white text-gray-900'
       }`}>
+        
       <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-12 relative">
           <motion.div
