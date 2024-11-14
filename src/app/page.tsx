@@ -198,7 +198,7 @@ export default function Portfolio() {
                     <li>Developed a user-friendly frontend for yoga enthusiasts</li>
                     <li>Implemented an admin panel for content management</li>
                     <li>Integrated Firebase for secure video storage and retrieval</li>
-                    <li>Created features for updating photos, videos, and testimonials</li>
+                    <li>Created Backend for updating photos, videos, and testimonials</li>
                   </ul>
                   <p className="mb-2">
                     <span className="font-semibold">Technologies used:</span> React, Node.js, Firebase, Content Management System
