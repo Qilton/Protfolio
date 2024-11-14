@@ -212,7 +212,7 @@ export default function Portfolio() {
                       className={`${theme === 'dark' ? 'text-purple-400 hover:text-purple-300' : 'text-purple-600 hover:text-purple-500'
                         } transition-colors duration-300 flex items-center`}
                     >
-                      Visit Site <ExternalLink className="w-4 h-4 ml-1" />
+                     <img src="/Yogika.png" alt="" /> <ExternalLink className="w-4 h-4 ml-1" />
                     </a>
                   </div>
                 </div>
