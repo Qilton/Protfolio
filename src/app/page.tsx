@@ -5,7 +5,7 @@ import { motion, useAnimation } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-//@ts-ignore
+
 import { Github, Linkedin, Mail, Moon, Sun, ExternalLink } from "lucide-react"
 
 interface AnimatedSectionProps {
@@ -117,8 +117,8 @@ export default function Portfolio() {
               </CardHeader>
               <CardContent className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>
                 <p>
-                  I'm a first-year B.Tech CSE student at Techno India University, Kolkata. Passionate about coding and
-                  exploring new technologies, I'm constantly pushing myself to learn and grow in the field of software
+                  I&#39;m a first-year B.Tech CSE student at Techno India University, Kolkata. Passionate about coding and
+                  exploring new technologies, I&#39;m constantly pushing myself to learn and grow in the field of software
                   development. My goal is to become a proficient full-stack developer and contribute to innovative projects.
                 </p>
               </CardContent>
@@ -131,7 +131,7 @@ export default function Portfolio() {
               <CardHeader>
                 <CardTitle className={theme === 'dark' ? 'text-purple-400' : 'text-purple-600'}>Tech Stack</CardTitle>
                 <CardDescription className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}>
-                  Technologies I'm proficient in or currently learning
+                  Technologies I&#39;m proficient in or currently learning
                 </CardDescription>
               </CardHeader>
               <CardContent>
