@@ -1,101 +1,254 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { ReactNode, useEffect, useState } from 'react'
+import { motion, useAnimation } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+//@ts-ignore
+import { Github, Linkedin, Mail, Moon, Sun, ExternalLink } from "lucide-react"
+
+interface AnimatedSectionProps {
+  children: ReactNode;
+}
+
+const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children }) => {
+  const controls = useAnimation()
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
+
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible')
+    }
+  }, [controls, inView])
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <motion.div
+      ref={ref}
+      animate={controls}
+      initial="hidden"
+      variants={{
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+      }}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+export default function Portfolio() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark')
+
+  const techStack = [
+    { name: "MongoDB", url: "https://www.mongodb.com/" },
+    { name: "Express.js", url: "https://expressjs.com/" },
+    { name: "React", url: "https://reactjs.org/" },
+    { name: "Node.js", url: "https://nodejs.org/" },
+    { name: "GraphQL", url: "https://graphql.org/" },
+    { name: "TypeScript", url: "https://www.typescriptlang.org/" },
+    { name: "Docker", url: "https://www.docker.com/" },
+    { name: "Prisma", url: "https://www.prisma.io/" },
+    { name: "PostgreSQL", url: "https://www.postgresql.org/" },
+    { name: "Firebase", url: "https://firebase.google.com/" },
+  ]
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light')
+  }
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+  }, [theme])
+
+  return (
+    <div className={`min-h-screen transition-colors duration-300 ${theme === 'dark'
+        ? 'bg-gradient-to-b from-gray-900 to-gray-800 text-white'
+        : 'bg-gradient-to-b from-gray-100 to-white text-gray-900'
+      }`}>
+      <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <header className="text-center mb-12 relative">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <h1 className={`text-5xl font-bold mb-2 ${theme === 'dark' ? 'text-purple-400' : 'text-purple-600'
+              }`}>Swayam Bhalotia</h1>
+            <p className={`text-xl ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+              }`}>Aspiring Full Stack Developer</p>
+          </motion.div>
+          <div className="flex justify-center space-x-4 mt-4">
+            <a href="https://github.com/Qilton" target='_blank' className={`${theme === 'dark' ? 'text-gray-400 hover:text-purple-400' : 'text-gray-600 hover:text-purple-600'
+              } transition-colors duration-300`}>
+              <Github className="w-6 h-6" />
+              <span className="sr-only">GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/swayam-bhalotia-8b7597318/" target='_blank' className={`${theme === 'dark' ? 'text-gray-400 hover:text-purple-400' : 'text-gray-600 hover:text-purple-600'
+              } transition-colors duration-300`}>
+              <Linkedin className="w-6 h-6" />
+              <span className="sr-only">LinkedIn</span>
+            </a>
+            <a href="mailto:swayambhalotia@gmail.com" target='_blank' className={`${theme === 'dark' ? 'text-gray-400 hover:text-purple-400' : 'text-gray-600 hover:text-purple-600'
+              } transition-colors duration-300`}>
+              <Mail className="w-6 h-6" />
+              <span className="sr-only">Email</span>
+            </a>
+          </div>
+          <button
+            onClick={toggleTheme}
+            className={`absolute top-0 right-0 p-2 ${theme === 'dark' ? 'text-gray-400 hover:text-purple-400' : 'text-gray-600 hover:text-purple-600'
+              } transition-colors duration-300`}
+            aria-label={`Toggle ${theme === 'light' ? 'dark' : 'light'} mode`}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            {theme === 'dark' ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+          </button>
+        </header>
+
+        <main className="space-y-12">
+          <AnimatedSection>
+            <Card className={`${theme === 'dark' ? 'bg-gray-800 border-purple-500' : 'bg-white border-purple-200'
+              }`}>
+              <CardHeader>
+                <CardTitle className={theme === 'dark' ? 'text-purple-400' : 'text-purple-600'}>About Me</CardTitle>
+              </CardHeader>
+              <CardContent className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>
+                <p>
+                  I'm a first-year B.Tech CSE student at Techno India University, Kolkata. Passionate about coding and
+                  exploring new technologies, I'm constantly pushing myself to learn and grow in the field of software
+                  development. My goal is to become a proficient full-stack developer and contribute to innovative projects.
+                </p>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <Card className={`${theme === 'dark' ? 'bg-gray-800 border-purple-500' : 'bg-white border-purple-200'
+              }`}>
+              <CardHeader>
+                <CardTitle className={theme === 'dark' ? 'text-purple-400' : 'text-purple-600'}>Tech Stack</CardTitle>
+                <CardDescription className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}>
+                  Technologies I'm proficient in or currently learning
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {techStack.map((tech) => (
+                    <a
+                      key={tech.name}
+                      href={tech.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="focus:outline-none"
+                    >
+                      <Badge
+                        variant="secondary"
+                        className={`${theme === 'dark' ? 'bg-purple-700 text-white' : 'bg-purple-100 text-purple-800'
+                          } transition-colors duration-300 hover:bg-purple-600 hover:text-white`}
+                      >
+                        {tech.name}
+                      </Badge>
+                    </a>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <Card className={`${theme === 'dark' ? 'bg-gray-800 border-purple-500' : 'bg-white border-purple-200'
+              }`}>
+              <CardHeader>
+                <CardTitle className={theme === 'dark' ? 'text-purple-400' : 'text-purple-600'}>Education</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <h3 className={`font-semibold text-lg ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                  Techno India University, Kolkata
+                </h3>
+                <p className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>
+                  B.Tech in Computer Science and Engineering
+                </p>
+                <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}>2023 - Present</p>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <Card className={`${theme === 'dark' ? 'bg-gray-800 border-purple-500' : 'bg-white border-purple-200'
+              }`}>
+              <CardHeader>
+                <CardTitle className={theme === 'dark' ? 'text-purple-400' : 'text-purple-600'}>Projects</CardTitle>
+                <CardDescription className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}>
+                  Showcase of my recent work
+                </CardDescription>
+              </CardHeader>
+              <CardContent className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                } space-y-6`}>
+                <div>
+                  <h3 className={`text-lg font-semibold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'
+                    }`}>Project Yogikaa</h3>
+                  <p className="mb-2">
+                    A comprehensive web application focused on yoga and wellness, showcasing my skills in modern web development and content management.
+                  </p>
+                  <ul className="list-disc list-inside mb-2 space-y-1">
+                    <li>Developed a user-friendly frontend for yoga enthusiasts</li>
+                    <li>Implemented an admin panel for content management</li>
+                    <li>Integrated Firebase for secure video storage and retrieval</li>
+                    <li>Created features for updating photos, videos, and testimonials</li>
+                  </ul>
+                  <p className="mb-2">
+                    <span className="font-semibold">Technologies used:</span> React, Node.js, Firebase, Content Management System
+                  </p>
+                  <div className="flex items-center space-x-2">
+                    <a
+                      href="https://yogikaa.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${theme === 'dark' ? 'text-purple-400 hover:text-purple-300' : 'text-purple-600 hover:text-purple-500'
+                        } transition-colors duration-300 flex items-center`}
+                    >
+                      Visit Site <ExternalLink className="w-4 h-4 ml-1" />
+                    </a>
+                  </div>
+                </div>
+                <p>
+                  More exciting projects are in the works, leveraging my skills in the MERN stack, GraphQL, TypeScript, Docker, Prisma, and PostgreSQL. Stay tuned for updates!
+                </p>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <Card className={`${theme === 'dark' ? 'bg-gray-800 border-purple-500' : 'bg-white border-purple-200'
+              }`}>
+              <CardHeader>
+                <CardTitle className={theme === 'dark' ? 'text-purple-400' : 'text-purple-600'}>Skills Highlight</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className={`list-disc list-inside ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                  } space-y-2`}>
+                  <li>Full-stack web development with MERN stack</li>
+                  <li>API development using GraphQL</li>
+                  <li>Database management with PostgreSQL and Prisma ORM</li>
+                  <li>Containerization with Docker</li>
+                  <li>Type-safe programming with TypeScript</li>
+                  <li>Version control with Git and GitHub</li>
+                  <li>Content Management System (CMS) development</li>
+                  <li>Cloud storage integration with Firebase</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        </main>
+
+        <footer className={`mt-12 text-center ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
+          }`}>
+          <p>&copy; {new Date().getFullYear()} Swayam Bhalotia. All rights reserved.</p>
+        </footer>
+      </div>
     </div>
-  );
+  )
 }
